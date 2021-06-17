@@ -1,16 +1,15 @@
 import { Router } from "express";
 
-import { createCategoryController } from "../modules/products/useCases/category/createCategory";
-import { listCategoriesController } from "../modules/products/useCases/category/listCategories";
+import { CreateCategoryController } from "../modules/products/useCases/category/createCategory/CreateCategoryController";
+import { ListCategoriesController } from "../modules/products/useCases/category/listCategories/ListCategoriesController";
 
 const categoriesRoutes = Router();
 
-categoriesRoutes.post("/", (request, response) => {
-  return createCategoryController.handle(request, response);
-});
+const createCategoryController = new CreateCategoryController();
+const listCategories = new ListCategoriesController();
 
-categoriesRoutes.get("/", (request, response) => {
-  return listCategoriesController.handle(request, response);
-});
+categoriesRoutes.post("/", createCategoryController.handle);
+
+categoriesRoutes.get("/", listCategories.handle);
 
 export { categoriesRoutes };
